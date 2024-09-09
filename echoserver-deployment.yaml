@@ -17,19 +17,15 @@ spec:
     spec:
       containers:
         - name: echoserver
-          image: docker.io/hrushikeshshelar2000/echo:latest
+          image: docker.io/hrushikeshshelar2000/echo:latest2
           imagePullPolicy: Always
-          securityContext:
-            runAsUser: 0  
           ports:
             - containerPort: 50051
+            # - containerPort: 80
           volumeMounts:
           - name: proto-volume
             mountPath: /etc/proto
             readOnly: true
-          env:
-          - name: PROTO_DESCRIPTOR_PATH
-            value: /etc/proto/echo.pb
       volumes:
       - name: proto-volume
         configMap:
@@ -46,9 +42,14 @@ spec:
   selector:
     app: echoserver
   ports:
-    - protocol: TCP
+    - name: grpc
+      protocol: TCP
       port: 50051
       targetPort: 50051
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
 
 ---
 apiVersion: networking.istio.io/v1alpha3
@@ -66,6 +67,12 @@ spec:
       protocol: GRPC
     hosts:
     - "*"
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
 
 ---
 apiVersion: networking.istio.io/v1alpha3
@@ -79,6 +86,13 @@ spec:
   gateways:
   - echoserver-gateway
   http:
+  - match:
+    - port: 80
+    route:
+    - destination:
+        host: echoserver
+        port:
+          number: 50051
   - match:
     - port: 50051
     route:

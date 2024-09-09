@@ -36,7 +36,7 @@ func main() {
 	grpcServer := grpc.NewServer()
 
 	// Register your Echo service with the gRPC server
-	pb.RegisterEchoServer(grpcServer, &server{}) // <--- Uncommented this line to register the Echo service
+	pb.RegisterEchoServer(grpcServer, &server{})
 
 	// Enable reflection so grpcurl can interact with the server
 	reflection.Register(grpcServer)
@@ -55,4 +55,7 @@ func main() {
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatalf("Failed to start health check server: %v", err)
 	}
+	// if err := http.ListenAndServe(":80", nil); err != nil {
+	// 	log.Fatalf("Failed to Listen 80: %v", err)
+	// }
 }

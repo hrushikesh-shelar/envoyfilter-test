@@ -12,7 +12,7 @@ spec:
     match:
       context: ANY
       listener:
-        portNumber: 50051
+        portNumber: 80
         filterChain:
           filter:
             name: "envoy.filters.network.http_connection_manager"
@@ -22,7 +22,7 @@ spec:
         name: envoy.filters.http.grpc_json_transcoder
         typed_config:
           "@type": type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder
-          proto_descriptor: "/etc/proto/echo.pb"
+          proto_descriptor_bin: CtMDCgplY2hvLnByb3RvEgRlY2hvIicKC0VjaG9SZXF1ZXN0EhgKB21lc3NhZ2UYASABKAlSB21lc3NhZ2UiKAoMRWNob1Jlc3BvbnNlEhgKB21lc3NhZ2UYASABKAlSB21lc3NhZ2UyNQoERWNobxItCgRFY2hvEhEuZWNoby5FY2hvUmVxdWVzdBoSLmVjaG8uRWNob1Jlc3BvbnNlQgxaCmVjaG8vO2VjaG9KngIKBhIEAAAQAQoICgEMEgMAABIKCAoBAhIDAgANCggKAQgSAwQAIQoJCgIICxIDBAAhCgoKAgYAEgQGAAgBCgoKAwYAARIDBggMCgsKBAYAAgASAwcCLwoMCgUGAAIAARIDBwYKCgwKBQYAAgACEgMHCxYKDAoFBgACAAMSAwchLQoKCgIEABIECgAMAQoKCgMEAAESAwoIEwoLCgQEAAIAEgMLAhUKDAoFBAACAAUSAwsCCAoMCgUEAAIAARIDCwkQCgwKBQQAAgADEgMLExQKCgoCBAESBA4AEAEKCgoDBAEBEgMOCBQKCwoEBAECABIDDwIVCgwKBQQBAgAFEgMPAggKDAoFBAECAAESAw8JEAoMCgUEAQIAAxIDDxMUYgZwcm90bzM=
           services: 
             - "echo.Echo"
           print_options:
@@ -30,3 +30,4 @@ spec:
             always_print_primitive_fields: true
             always_print_enums_as_ints: false
             preserve_proto_field_names: false
+ 
